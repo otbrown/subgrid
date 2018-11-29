@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "d3q15.h"
 
+void report(Lattice *);
+
 int main (void) {
   int nx = 10;
   int ny = 10;
@@ -53,9 +55,28 @@ int main (void) {
     }
   }
 
+  // calculation
+  report(lat);
+  d3q15_iterate(lat, 100);
+  calc_hydro(lat);
+  report(lat);
+  d3q15_iterate(lat, 100);
+  calc_hydro(lat);
+  report(lat);
+
   // Finalisation
   printf("Cleaning up.\n");
   d3q15_destroy(lat);
 
   return 0;
+}
+
+void report(Lattice * lat) {
+  printf("Time step %d\n", lat->time_step);
+  printf("Density:\n[ ");
+  for (int i = 1; i <= lat->nz; i++) {
+    printf("%g ", DQ_rho_get(lat, lat->nx/2, lat->ny/2, i) - 1.0);
+  }
+  printf("]\n");
+  return;
 }
