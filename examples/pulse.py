@@ -61,10 +61,22 @@ class AniPlotter(object):
         #     self.ax.figure.canvas.draw()
 
         self.line.set_data(self.x, self.y)
-        return self.line,
+        return self.line
+
+    def report(self):
+        print("Time step ", self.lattice.time_step)
+        print("Density:")
+        print(self.lattice.rho[nx/2, ny/2, 1:nz+1] - 1.0)
+        #print("Velocity:")
+        #print(self.lattice.u[nx/2, ny/2, 1:nz+1])
 
 ap = AniPlotter()
-ani = animation.FuncAnimation(ap.fig, ap.get_plot, frames=count(0,5),
-                                  init_func=ap.init_plot, repeat=False, blit=True)
+#ani = animation.FuncAnimation(ap.fig, ap.get_plot, frames=count(0,5),
+#                                  init_func=ap.init_plot, repeat=False, blit=True)
+#plt.show()
 
-plt.show()
+ap.report()
+ap.advance_to(100)
+ap.report()
+ap.advance_to(200)
+ap.report()
