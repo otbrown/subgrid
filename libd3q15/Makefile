@@ -1,9 +1,8 @@
 LIBDIR = $(HOME)/lib
 INCDIR = $(HOME)/include
 
-CC = icc
-CFLAGS = -Wall -O3 -std=c99 -g -I$(HOME)/include
-
+CC = gcc
+CFLAGS = -Wall -O3 -std=c99
 AR = ar rc
 
 LIB = libd3q15.a
@@ -24,13 +23,6 @@ $(LIB) : $(libobjs)
 
 eigenvectors.h : eigenvectors.py
 	python $< C > $@
-
-#install : $(LIB)
-#	cp $(LIB) $(LIBDIR)
-#	if [ ! -d $(INCDIR)/libd2q9 ] ; then \
-#	  mkdir $(INCDIR)/libd2q9; \
-#	fi
-#	cp *.h $(INCDIR)/libd2q9;
 
 .PHONY : clean
 clean :
